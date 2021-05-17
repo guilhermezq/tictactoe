@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Application {
@@ -6,9 +7,9 @@ public class Application {
 
         Scanner scanner = new Scanner(System.in);
 
-        char[][] board = {{' ', ' ',' '},
-                {' ',' ',' '},
-                {' ',' ',' '}};
+        char[][] board = {{' ', ' ', ' '},
+                {' ', ' ', ' '},
+                {' ', ' ', ' '}};
 
         System.out.println("Welcome to Tic-Tac-Toe-made-by-Latvian-Girls!");
         System.out.println();
@@ -24,20 +25,54 @@ public class Application {
         System.out.println();
 
         System.out.println("Enter Your name, please!");
-        String playerName = scanner.nextLine();
+        String playerName = scanner.next();
 
 
-
-
-        printBoard(board);
         playerMove(scanner, board, playerName);
 
+        Random rand = new Random();
+        while (true) {
+            int computerMove = rand.nextInt(9) + 1;
+            if (isValidMove(board, computerMove)) {
+                break;
+            }
+        }
+        printBoard(board);
     }
+
+
+    private static boolean isValidMove(char[][] board, int position) {
+        switch (position) {
+            case 1:
+                return (board[0][0] == ' ');
+            case 2:
+                return (board[0][1] == ' ');
+            case 3:
+                return (board[0][2] == ' ');
+            case 4:
+                return (board[1][0] == ' ');
+            case 5:
+                return (board[1][1] == ' ');
+            case 6:
+                return (board[1][2] == ' ');
+            case 7:
+                return (board[2][0] == ' ');
+            case 8:
+                return (board[2][1] == ' ');
+            case 9:
+                return (board[2][2] == ' ');
+            default:
+                return false;
+        }
+    }
+
+
+
 
     private static void playerMove(Scanner scanner, char[][] board, String playerName) {
         System.out.println(playerName + ", what will be Your move (1-9)?");
         int playerInput = scanner.nextInt();
-        switch (playerInput){
+        switch (playerInput) {
             case 1:
                 board[0][0] = 'X';
                 break;
