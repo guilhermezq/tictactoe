@@ -27,16 +27,63 @@ public class Application {
         System.out.println("Enter Your name, please!");
         String playerName = scanner.next();
 
-
-        playerMove(scanner, board, playerName);
-
-        Random rand = new Random();
         while (true) {
-            int computerMove = rand.nextInt(9) + 1;
+            playerMove(scanner, board, playerName);
+            isGameFinished(board);
+            printBoard(board);
+            computerTurn(board);
+        }
+    }
+
+    private static boolean isGameFinished(char[][] board) {
+        if (isWinner(board, 'X')) {
+            printBoard(board);
+            System.out.println("Player wins!");
+            return true;
+        }
+
+        if (isWinner(board, 'O')) {
+            printBoard(board);
+            System.out.println("Computer wins!");
+            return true;
+        }
+        //check if the board is full
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] == ' ') {
+                    return false;
+                }
+            }
+        }
+        printBoard(board);
+        System.out.println("The game ended in a tie!");
+        return true;
+    }
+
+    private static boolean isWinner(char[][] board, char symbol) {
+        return (board[0][0] == symbol && board[0][1] == symbol && board[0][2] == symbol) || // rows check
+                (board[1][0] == symbol && board[1][1] == symbol && board[1][2] == symbol) ||
+                (board[2][0] == symbol && board[2][1] == symbol && board[2][2] == symbol) ||
+
+                (board[0][0] == symbol && board[1][0] == symbol && board[2][0] == symbol) || //column check
+                (board[0][1] == symbol && board[1][1] == symbol && board[2][1] == symbol) ||
+                (board[0][2] == symbol && board[1][2] == symbol && board[2][2] == symbol) ||
+
+                (board[0][0] == symbol && board[1][1] == symbol && board[2][2] == symbol) || //diagonale check
+                (board[0][2] == symbol && board[1][1] == symbol && board[2][0] == symbol);
+    }
+
+    private static void computerTurn(char[][] board) {
+        Random rand = new Random();
+        int computerMove;
+        while (true) {
+            computerMove = rand.nextInt(9) + 1;
             if (isValidMove(board, computerMove)) {
                 break;
             }
         }
+        System.out.println("Computer move: " + computerMove);
+        placeMove(board, computerMove, 'O');
         printBoard(board);
     }
 
@@ -67,38 +114,50 @@ public class Application {
     }
 
 
-
-
     private static void playerMove(Scanner scanner, char[][] board, String playerName) {
-        System.out.println(playerName + ", what will be Your move (1-9)?");
-        int playerInput = scanner.nextInt();
-        switch (playerInput) {
+        int playerInput;
+        while (true) {
+            System.out.println(playerName + ", what will be Your move (1-9)?");
+            playerInput = scanner.nextInt();
+            if (isValidMove(board, playerInput)) {
+                break;
+            } else {
+                System.out.println("Your input " + playerInput + " is not valid.");
+            }
+        }
+        placeMove(board, playerInput, 'X');
+
+    }
+
+
+    private static void placeMove(char[][] board, int position, char symbol) {
+        switch (position) {
             case 1:
-                board[0][0] = 'X';
+                board[0][0] = symbol;
                 break;
             case 2:
-                board[0][1] = 'X';
+                board[0][1] = symbol;
                 break;
             case 3:
-                board[0][2] = 'X';
+                board[0][2] = symbol;
                 break;
             case 4:
-                board[1][0] = 'X';
+                board[1][0] = symbol;
                 break;
             case 5:
-                board[1][1] = 'X';
+                board[1][1] = symbol;
                 break;
             case 6:
-                board[1][2] = 'X';
+                board[1][2] = symbol;
                 break;
             case 7:
-                board[2][0] = 'X';
+                board[2][0] = symbol;
                 break;
             case 8:
-                board[2][1] = 'X';
+                board[2][1] = symbol;
                 break;
             case 9:
-                board[2][2] = 'X';
+                board[2][2] = symbol;
                 break;
             default:
                 System.out.println("Invalid input!");
