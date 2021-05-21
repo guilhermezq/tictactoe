@@ -35,6 +35,9 @@ public class Application {
                 }
                 Methods.printBoard(board);
                 Methods.computerTurn(board);
+                if (Methods.isGameFinished(board)) {
+                    break;
+                }
             }
 
             System.out.println("To play again press 1, to EXIT the game press 0!");

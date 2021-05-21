@@ -41,7 +41,7 @@ public class Methods {
                 (board[0][1] == symbol && board[1][1] == symbol && board[2][1] == symbol) ||
                 (board[0][2] == symbol && board[1][2] == symbol && board[2][2] == symbol) ||
 
-                (board[0][0] == symbol && board[1][1] == symbol && board[2][2] == symbol) || //diagonale check
+                (board[0][0] == symbol && board[1][1] == symbol && board[2][2] == symbol) || //diagonal check
                 (board[0][2] == symbol && board[1][1] == symbol && board[2][0] == symbol)) {
             return true;
         }
